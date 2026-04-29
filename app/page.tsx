@@ -24,7 +24,7 @@ export default function Home() {
           <h4>SELVANOIR Trilogía</h4>
           <p style={{ color: "#888" }}>Universo noir principal del autor.</p>
 
-          <img src="/PORTADA_A.jpeg" alt="Libro" style={{ width: "100%", marginTop: "10px" }} />
+          <img src="/D82CBB0E-9DD0-4C81-ADD1-B86B15815A7F.png" alt="Libro" style={{ width: "100%", marginTop: "10px" }} />
 
           <div style={{ marginTop: "10px" }}>
             <a href="https://x.com/ReoSarazola/status/2048513511719080121?s=20" target="_blank" style={{ color: "white" }}>
