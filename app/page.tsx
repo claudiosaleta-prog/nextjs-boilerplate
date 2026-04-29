@@ -1,65 +1,151 @@
-import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
 
-export default function Home() {
+// Utility: embargo logic
+function isUnlocked(dateString) {
+  const now = new Date();
+  const unlockDate = new Date(dateString);
+  return now >= unlockDate;
+}
+
+export default function ReoSarazolaSite() {
+  const unlocked = isUnlocked("2026-06-01");
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <div className="bg-neutral-950 text-neutral-200 min-h-screen font-sans select-none">
+
+      {/* HEADER */}
+      <header className="border-b border-neutral-800 p-6 text-center">
+        <h1 className="text-3xl tracking-wide">Reo Sarazola</h1>
+        <p className="text-sm text-neutral-400 mt-2">
+          Narrativa noir contemporánea
+        </p>
+      </header>
+
+      {/* HERO */}
+      <section className="max-w-4xl mx-auto p-8 text-center">
+        <h2 className="text-xl text-neutral-300">
+          Historias de identidad, crimen y ambigüedad moral.
+        </h2>
+
+        <div className="mt-6 flex gap-4 justify-center">
+          <Button className="rounded-2xl">Leer historias</Button>
+          <Button variant="outline" className="rounded-2xl">
+            Seguir en X
+          </Button>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+      </section>
+
+      {/* OBRAS */}
+      <section className="max-w-5xl mx-auto grid md:grid-cols-2 gap-6 p-8">
+
+        {/* SELVANOIR */}
+        <Card className="bg-neutral-900 border-neutral-800 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="h-64 bg-cover bg-center" style={{ backgroundImage: "url('/Selvanoir2.png')" }} />
+            <div className="p-6">
+              <h3 className="text-lg mb-2">SELVANOIR Trilogía</h3>
+              <p className="text-sm text-neutral-400">
+                Universo noir principal del autor.
+              </p>
+
+              <img
+                src="/PORTADA_A.jpeg"
+                alt="El Escritor Designado"
+                className="rounded-2xl mt-4 mb-4"
+              />
+
+              <Button asChild className="rounded-2xl">
+                <a href="https://x.com/ReoSarazola/status/2048513511719080121?s=20" target="_blank">
+                  Explorar
+                </a>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* OBRA BLOQUEADA */}
+        <Card className="bg-neutral-900 border-neutral-800 overflow-hidden relative">
+          <CardContent className="p-0">
+            <div className="h-64 bg-cover bg-center" style={{ backgroundImage: "url('/proximamente.jpg')" }} />
+
+            {!unlocked && (
+              <div className="absolute inset-0 backdrop-blur-md bg-black/60 flex items-center justify-center">
+                <p className="text-sm text-neutral-300">Disponible próximamente</p>
+              </div>
+            )}
+
+            <div className="p-6">
+              <h3 className="text-lg mb-2">Nueva obra</h3>
+              <p className="text-sm text-neutral-400">Lanzamiento en breve.</p>
+              {unlocked && (
+                <Button className="mt-4 rounded-2xl">Ver obra</Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+
+      </section>
+
+      {/* HISTORIAS */}
+      <section className="max-w-5xl mx-auto p-8">
+        <h3 className="text-lg mb-6">Historias</h3>
+
+        <Card className="bg-neutral-900 border-neutral-800 mb-6 overflow-hidden">
+          <CardContent className="p-0">
+            <div className="h-64 bg-cover bg-center" style={{ backgroundImage: "url('/coleccionista1.jpg')" }} />
+            <div className="p-6">
+              <h4 className="text-md">El Coleccionista de Arte</h4>
+              <p className="text-sm text-neutral-400 mt-2">
+                Historia noir serializada ambientada en Canarias.
+              </p>
+              <div className="flex gap-3 mt-4">
+                <Button asChild className="rounded-2xl">
+                  <a href="https://x.com/ReoSarazola/status/2047418319951503649?s=20" target="_blank">Parte 1</a>
+                </Button>
+                <Button asChild className="rounded-2xl">
+                  <a href="https://x.com/ReoSarazola/status/2049497076564701533?s=20" target="_blank">Parte 2</a>
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* BLOG */}
+      <section className="max-w-5xl mx-auto p-8">
+        <h3 className="text-lg mb-6">Blog</h3>
+        <Card className="bg-neutral-900 border-neutral-800">
+          <CardContent className="p-6">
+            <p className="text-sm text-neutral-400">
+              Próximamente artículos, avances y notas del autor.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* BIO */}
+      <section className="max-w-4xl mx-auto p-8">
+        <Card className="bg-neutral-900 border-neutral-800">
+          <CardContent className="p-6">
+            <h3 className="text-lg mb-2">Bio</h3>
+            <p className="text-sm text-neutral-400">
+              Reo Sarazola es autor de narrativa noir contemporánea.
+            </p>
+          </CardContent>
+        </Card>
+      </section>
+
+      {/* CONTACTO */}
+      <section className="max-w-4xl mx-auto p-8 text-center">
+        <p className="text-sm text-neutral-400">reo@reosarazola.com</p>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="border-t border-neutral-800 text-center p-6 text-xs text-neutral-500">
+        © 2026 Reo Sarazola
+      </footer>
+
     </div>
   );
 }
